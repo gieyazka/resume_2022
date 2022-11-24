@@ -14,7 +14,7 @@ export const header = {
 
 
 export const profileImage = {
-    
+
     rest: {
         // y: 20,
         x: '-50%',
@@ -25,7 +25,7 @@ export const profileImage = {
     hover: (e) => {
         let element = document.querySelector('.header')
         let viewportHeight = window.innerHeight;
-let viewportWidth = window.innerWidth;
+        let viewportWidth = window.innerWidth;
         // console.log(element.offsetHeight);
         // console.log((innerHeight * 0.2) - 64)
         // console.log(e);
@@ -34,6 +34,20 @@ let viewportWidth = window.innerWidth;
             backgroundColor: 'blue',
             // transform: 'translateX(-10vw)',
             top: 'calc(10vh - 64px)',
+            // y : "-10vw",
+            // y : 0
+        }
+    }
+}
+
+
+export const menuItem = {
+    hover: () => {
+        return {
+
+            backgroundColor: 'blue',
+            // transform: 'translateX(-10vw)',
+            // top: 'calc(10vh - 64px)',
             // y : "-10vw",
             // y : 0
         }
