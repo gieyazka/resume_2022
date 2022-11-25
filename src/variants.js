@@ -1,7 +1,5 @@
 export const header = {
-    rest :{
-        height : 64
-    },
+
     hover: () => {
         // let element = document.querySelector('.header')
         // console.log(element.offsetHeight);
@@ -19,27 +17,17 @@ export const profileImage = {
 
     rest: {
         // y: 20,
-        x: '-50%',
-        top: "72px",
-        height: "20vh",
-        width: "20vh",
+        top: "calc(96px)",
+  
     },
-    hover: (e) => {
-        let element = document.querySelector('.header')
-        let viewportHeight = window.innerHeight;
-        let viewportWidth = window.innerWidth;
-        // console.log(element.offsetHeight);
-        // console.log((innerHeight * 0.2) - 64)
-        // console.log(e);
-        return {
+    // hover: (e) => {
+      
+    //     return {
 
-            backgroundColor: 'blue',
-            // transform: 'translateX(-10vw)',
-            top: 'calc(10vh - 64px)',
-            // y : "-10vw",
-            // y : 0
-        }
-    }
+    //         backgroundColor: 'blue',
+    //         top: 'calc(10vh - 64px)',
+    //     }
+    // }
 }
 
 
@@ -47,8 +35,7 @@ export const menuItem = {
     hover: () => {
         return {
 
-            // backgroundColor: 'red',
-            boxShadow: '0px 0px 20px 8px #F9F9F9'
+            backgroundColor: 'blue',
             // transform: 'translateX(-10vw)',
             // top: 'calc(10vh - 64px)',
             // y : "-10vw",
