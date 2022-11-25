@@ -1,5 +1,7 @@
 export const header = {
-
+    rest :{
+        height : 64
+    },
     hover: () => {
         // let element = document.querySelector('.header')
         // console.log(element.offsetHeight);
@@ -45,7 +47,8 @@ export const menuItem = {
     hover: () => {
         return {
 
-            backgroundColor: 'blue',
+            // backgroundColor: 'red',
+            boxShadow: '0px 0px 20px 8px #F9F9F9'
             // transform: 'translateX(-10vw)',
             // top: 'calc(10vh - 64px)',
             // y : "-10vw",
