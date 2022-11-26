@@ -20,14 +20,14 @@ export const profileImage = {
         top: "calc(96px)",
   
     },
-    // hover: (e) => {
+    hover: (e) => {
       
-    //     return {
+        return {
 
-    //         backgroundColor: 'blue',
-    //         top: 'calc(10vh - 64px)',
-    //     }
-    // }
+            backgroundColor: 'blue',
+            top: 'calc(10vh - 64px)',
+        }
+    }
 }
 
 

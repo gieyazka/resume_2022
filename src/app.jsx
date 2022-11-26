@@ -1,7 +1,13 @@
 import "./app.css";
 
+import {
+  MotionValue,
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { header, menuItem, profileImage } from "./variants";
-import { motion, useInView, useScroll, useTransform, MotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "preact/hooks";
 
 import pointer from "./assets/pointer.svg";
@@ -9,10 +15,11 @@ import preactLogo from "./assets/preact.svg";
 
 export function App() {
   const [showSubMenu, setShowSubMenu] = useState(null);
+  const [hoverHeader, setHoverHeader] = useState({ header: false, img: false });
 
   const scrollRef = useRef(null);
   const headerRef = useRef(true);
-  const isInView = useInView(headerRef)
+  const isInView = useInView(headerRef);
   const menuView = useScroll({
     target: scrollRef,
     // offset: ["start end", "end end"],
@@ -24,11 +31,11 @@ export function App() {
   useEffect(() => {
     // console.log("Element is in view: ", isInView,)
     if (isInView || showSubMenu == null) {
-      setShowSubMenu(false)
+      setShowSubMenu(false);
     } else {
-      setShowSubMenu(true)
+      setShowSubMenu(true);
     }
-  }, [isInView])
+  }, [isInView]);
   useEffect(() => {
     return menuView.scrollYProgress.onChange((latest) => {
       // console.log("Page scroll: ", latest);
@@ -47,21 +54,35 @@ export function App() {
   // viewportHeight : window.innerHeight;
 
   // });
-
+  console.table({
+    head : hoverHeader.header,
+    img : hoverHeader.img 
+  });
   return (
     <>
-
       <div ref={headerRef}>
         <motion.div
           className="header"
           initial="rest"
           whileHover="hover"
-          onHoverStart={e => {console.log(e)}}
           animate="rest"
         >
-          <motion.div variants={header} id='header'
+          <motion.div
+            variants={hoverHeader.img == false && header}
+            id="header"
+            onHoverStart={(e) => {
+              setHoverHeader((data) => {
+                return { ...data, header: true };
+              });
+            }}
+            onHoverEnd={(e) => {
+              setHoverHeader((data) => {
+                return { ...data, header: false };
+              });
+            }}
             viewport={{ root: headerRef }}
-            class="row">
+            class="row"
+          >
             <p>Subject Name</p>
             <div class="row-end">
               <div className="row-item pointer ">section 1</div>
@@ -70,18 +91,32 @@ export function App() {
               <div className="row-item pointer">section 4</div>
             </div>
           </motion.div>
-          <motion.img id='profile'
-            whileHover={{
-              backgroundColor: 'blue',
-              top: 'calc(10vh - 64px)'
+        </motion.div>
+          <motion.img
+            id="profile"
+         
+              animate={
+                hoverHeader.img ==  false && hoverHeader.header ==  true ? {
+                  backgroundColor: 'blue',
+                  top: 'calc(10vh - 64px)',
+                }: {top : 96}
+              }
+            onHoverStart={() => {
+              setHoverHeader((data) => {
+                return { ...data, img: true };
+              });
             }}
-            // onHoverStart={e => {console.log(e);
-            // return null}}
+            onHoverEnd={() => {
+              setHoverHeader((data) => {
+                return { ...data, img: false };
+              });
+            }}
             src={"./src/assets/rick.png"}
-            variants={profileImage}
+            // variants={hoverHeader.img ==  false && hoverHeader.header ==  true  && profileImage 
+      
+            //  }
             class="profile-image"
           ></motion.img>
-        </motion.div>
       </div>
       {/* <Section>
           asdasd
@@ -123,24 +158,21 @@ export function App() {
         initial={{ opacity: 0 }}
         animate={{ opacity: showSubMenu === true ? 1 : 0 }}
         exit={{ opacity: showSubMenu === true ? 0 : 1 }}
-
-        className="menu">
+        className="menu"
+      >
         <SideMenu />
         <SideMenu />
         <SideMenu />
         <SideMenu />
-
       </motion.div>
-
     </>
   );
 }
 
-const SideMenu = ({ }) => {
+const SideMenu = ({}) => {
   return (
     <motion.div className="menu-item" whileHover="hover">
       <motion.div
-
         // exit={{ opacity: 0 }}
         variants={menuItem}
         className="line-menu pointer"
@@ -152,12 +184,9 @@ const SideMenu = ({ }) => {
 function Section(props) {
   const ref = useRef(null);
 
-
   return (
     <section>
-      <div ref={ref}>
-        {props.children}
-      </div>
+      <div ref={ref}>{props.children}</div>
     </section>
   );
 }
