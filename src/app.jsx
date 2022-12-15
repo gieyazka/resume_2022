@@ -15,7 +15,11 @@ import preactLogo from "./assets/preact.svg";
 
 export function App() {
   const [showSubMenu, setShowSubMenu] = useState(null);
-  const [hoverHeader, setHoverHeader] = useState({ header: false, img: false });
+  const [hoverHeader, setHoverHeader] = useState({
+    header: false,
+    img: false,
+    menu: false,
+  });
 
   const scrollRef = useRef(null);
   const headerRef = useRef(true);
@@ -56,34 +60,50 @@ export function App() {
   // });
   console.table({
     head : hoverHeader.header,
-    img : hoverHeader.img 
+    img : hoverHeader.img,
+    menu : hoverHeader.menu
   });
   return (
     <>
-      <div ref={headerRef}>
+      <motion.div
+        ref={headerRef}
+        onHoverStart={(e) => {
+          setHoverHeader((data) => {
+            return { ...data, header: true };
+          });
+        }}
+        onHoverEnd={(e) => {
+          setHoverHeader((data) => {
+            return { ...data, header: false ,menu : false};
+          });
+        }}
+      >
         <motion.div
           className="header"
-          initial="rest"
-          whileHover="hover"
-          animate="rest"
-        >
+          // initial="rest"
+          // whileHover="hover"
+          // animate="rest"
+          
+          >
           <motion.div
-            variants={hoverHeader.img == false && header}
+            animate={hoverHeader.header == true && hoverHeader.menu ? { height: 'calc(20vh - 64px)'} : {maxHeight: '64px'}}
+            // variants={header}
             id="header"
             onHoverStart={(e) => {
               setHoverHeader((data) => {
-                return { ...data, header: true };
+                return { ...data, menu: true };
               });
             }}
-            onHoverEnd={(e) => {
-              setHoverHeader((data) => {
-                return { ...data, header: false };
-              });
-            }}
+            // onHoverEnd={(e) => {
+            //   setHoverHeader((data) => {
+     
+            //     return { ...data, menu: false };
+            //   });
+            // }}
             viewport={{ root: headerRef }}
             class="row"
           >
-            <p>Subject Name</p>
+            <p style={{fontSize : '1.5rem'}}>Subject Name</p>
             <div class="row-end">
               <div className="row-item pointer ">section 1</div>
               <div className="row-item pointer">section 2</div>
@@ -92,32 +112,34 @@ export function App() {
             </div>
           </motion.div>
         </motion.div>
-          <motion.img
-            id="profile"
-         
-              animate={
-                hoverHeader.img ==  false && hoverHeader.header ==  true ? {
-                  backgroundColor: 'blue',
-                  top: 'calc(10vh - 64px)',
-                }: {top : 96}
-              }
-            onHoverStart={() => {
-              setHoverHeader((data) => {
-                return { ...data, img: true };
-              });
-            }}
-            onHoverEnd={() => {
-              setHoverHeader((data) => {
-                return { ...data, img: false };
-              });
-            }}
-            src={"./src/assets/rick.png"}
-            // variants={hoverHeader.img ==  false && hoverHeader.header ==  true  && profileImage 
-      
-            //  }
-            class="profile-image"
-          ></motion.img>
-      </div>
+        <motion.img
+          id="profile"
+          animate={
+            hoverHeader.header == true && hoverHeader.menu
+                ? {
+                    backgroundColor: "blue",
+                    top: "calc(10vh - 64px)",
+                  }
+           
+              :  { top: 96 }
+          }
+          onHoverStart={() => {
+            setHoverHeader((data) => {
+              return { ...data, img: false };
+            });
+          }}
+          onHoverEnd={() => {
+            setHoverHeader((data) => {
+              return { ...data, img: false };
+            });
+          }}
+          src={"./src/assets/rick.png"}
+          // variants={hoverHeader.img ==  false && hoverHeader.header ==  true  && profileImage
+
+          //  }
+          class="profile-image"
+        ></motion.img>
+      </motion.div>
       {/* <Section>
           asdasd
       </Section> */}
